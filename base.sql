@@ -1,6 +1,6 @@
 
 CREATE DATABASE goticks;
-CREATE TABLE "user" (
+CREATE TABLE "users" (
     "id"            INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     "picture"       VARCHAR(255),
     "firstName"     VARCHAR(255) NOT NULL,
@@ -201,4 +201,74 @@ VALUES
 ('Michael Keaton'),
 ('Robert Downey Jr');
 
+ALTER TABLE "transaction"
+    ALTER COLUMN "bokingDate" TYPE timestamp with time zone ;
 
+ALTER TABLE "movie"
+    ALTER COLUMN "releaseDate" TYPE timestamp with time zone ;
+
+ALTER TABLE "movie"
+    ALTER COLUMN "duration" TYPE time with time zone ;
+
+ALTER TABLE "users" ADD CONSTRAINT "email" UNIQUE ("email");
+
+
+ALTER TABLE "movieCast"
+ADD CONSTRAINT "fk_movieCast_movieId"
+FOREIGN KEY ("movieId") REFERENCES "movie" ("id")
+ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE "movieCast"
+ADD CONSTRAINT "fk_movieCast_castId"
+FOREIGN KEY ("castId") REFERENCES "casts" ("id")
+ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE "movieGenre"
+ADD CONSTRAINT "fk_movieGenre_movieId"
+FOREIGN KEY ("movieId") REFERENCES "movie" ("id")
+ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE "movieGenre"
+ADD CONSTRAINT "fk_movieGenre_genreId"
+FOREIGN KEY ("genreId") REFERENCES "genre" ("id")
+ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE "movieSchedule"
+ADD CONSTRAINT "fk_movieSchedule_movieId"
+FOREIGN KEY ("movieId") REFERENCES "movie" ("id")
+ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE "movieSchedule"
+ADD CONSTRAINT "fk_movieSchedule_cinemaId"
+FOREIGN KEY ("cinemaId") REFERENCES "cinema" ("id")
+ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE "movieScheduleTime"
+ADD CONSTRAINT "fk_movieScheduleTime_movieScheduleId"
+FOREIGN KEY ("movieScheduleId") REFERENCES "movieSchedule" ("id")
+ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE "reversedSeat"
+ADD CONSTRAINT "fk_reversedSeat_transactionId"
+FOREIGN KEY ("transactionId") REFERENCES "transaction" ("id")
+ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE "transaction"
+ADD CONSTRAINT "fk_transaction_movieId"
+FOREIGN KEY ("movieId") REFERENCES "movie" ("id")
+ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE "transaction"
+ADD CONSTRAINT "fk_transaction_cinemaId"
+FOREIGN KEY ("cinemaId") REFERENCES "cinema" ("id")
+ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE "transaction"
+ADD CONSTRAINT "fk_transaction_movieScheduleId"
+FOREIGN KEY ("movieScheduleId") REFERENCES "movieSchedule" ("id")
+ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE "transaction"
+ADD CONSTRAINT "fk_transaction_statusId"
+FOREIGN KEY ("statusId") REFERENCES "status" ("id")
+ON DELETE CASCADE ON UPDATE CASCADE;

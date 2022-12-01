@@ -4,9 +4,8 @@ const { readAllUser, createUser, updateUser, deleteUser, readUser } = require(".
 
 usersRouter.get('/', readAllUser)
 usersRouter.post('/', createUser)
-usersRouter.patch('/', updateUser)
-usersRouter.delete('/', deleteUser)
-
+usersRouter.patch('/:id', updateUser)
+usersRouter.delete('/:id', deleteUser)
 usersRouter.get('/:id', readUser)
 
 module.exports = usersRouter
