@@ -1,7 +1,19 @@
 const db = require("../helpers/db.helper");
 
-exports.selectAllMovie = (cb) => {
-  db.query('SELECT * FROM "movie"', cb);
+exports.selectAllMovie = (filter, cb) => {
+  db.query(
+    `SELECT * FROM "movie" WHERE title LIKE $3 ORDER BY "${filter.sortBy}" ${filter.sort} LIMIT $1 OFFSET $2`,
+    [filter.limit, filter.page, `%${filter.search}%`],
+    cb
+  );
+};
+
+exports.selectCountAllMovie = (filter, cb) => {
+  db.query(
+    `SELECT COUNT("title") AS "totalData" FROM "movie" WHERE title LIKE $1`,
+    [`%${filter.search}%`],
+    cb
+  );
 };
 
 exports.insertMovie = (data, cb) => {

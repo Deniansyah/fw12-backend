@@ -5,7 +5,7 @@ routes.use("/casts", require("./casts.route"));
 routes.use("/cinemas", require("./cinema.route"));
 routes.use("/forgots", require("./forgot.route"));
 routes.use("/genres", require("./genre.route"));
-routes.use("/movies", authMiddleware, require("./movie.route"));
+routes.use("/movies", require("./movie.route"));
 routes.use("/moviecasts", require("./movieCast.route"));
 routes.use("/moviegenres", require("./movieGenre.route"));
 routes.use("/movieschedules", require("./movieSchedule.route"));
