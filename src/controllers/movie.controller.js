@@ -1,5 +1,5 @@
 const errorHandler = require("../helpers/errorHandler");
-const { selectAllMovie, insertMovie, selectMovie, dropMovie, changeMovie, selectCountAllMovie } = require("../models/movie.model")
+const { selectAllMovie, insertMovie, selectMovie, dropMovie, changeMovie, selectCountAllMovie, upcomingMovie, nowShowingMovie, detailMovie } = require("../models/movie.model")
 
 
 exports.readAllMovie = (req, res) => {
@@ -114,6 +114,7 @@ exports.deleteMovie = (req, res) => {
 
 exports.readMovie = (req, res) => {
   selectMovie(req.params.id, (err, data) => {
+    console.log(data)
     if (err) {
       return errorHandler(err, res);
     } else {
@@ -131,3 +132,42 @@ exports.readMovie = (req, res) => {
   // });
 };
 
+exports.upcoming = (req, res) => {
+  upcomingMovie(req.query, (err, data) => {
+    if (err) {
+      return errorHandler(err, res)
+    }
+    return res.status(200).json({
+      status: true,
+      meassage: "Up coming movies",
+      results: data.rows
+    })
+  })
+}
+
+exports.nowShowing = (req, res) => {
+  nowShowingMovie((err, data) => {
+    if (err) {
+      return errorHandler(err, res);
+    }
+    return res.status(200).json({
+      status: true,
+      meassage: "Now showing movies",
+      results: data.rows,
+    });
+  });
+};
+
+exports.detail = (req, res) => {
+  detailMovie(req.params.id, (err, data) => {
+    if (err) {
+      console.log(err)
+      return errorHandler(err, res);
+    }
+    return res.status(200).json({
+      status: true,
+      meassage: "Detail movie",
+      results: data.rows[0],
+    });
+  });
+};

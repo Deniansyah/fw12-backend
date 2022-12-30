@@ -54,3 +54,37 @@ exports.dropMovie = (id, cb) => {
 exports.selectMovie = (id, cb) => {
   db.query('SELECT * FROM movie WHERE id = $1', [id], cb);
 };
+
+exports.upcomingMovie = (data, cb) => {
+  const sql = `SELECT * FROM "movie" WHERE date_part('year', "releaseDate")::TEXT = COALESCE(NULLIF($1, ''), date_part('year', current_date)::TEXT) AND
+  date_part('month', "releaseDate")::TEXT = COALESCE(NULLIF($2, ''), date_part('month', current_date)::TEXT)`;
+  const values = [data.year, data.month]
+  db.query(sql, values, cb)
+}
+
+exports.nowShowingMovie = (cb) => {
+  const sql = `
+  SELECT m.id, m.picture, m.title, ms."startDate", ms."endDate", string_agg(g.name, ', ') as genre FROM "movie" m
+  JOIN "movieSchedule" ms ON ms."movieId" = m.id
+  LEFT JOIN "movieGenre" mg ON mg."movieId" = m.id
+  LEFT JOIN genre g ON g.id = mg."genreId"
+  WHERE CURRENT_DATE BETWEEN ms."startDate" AND ms."endDate"
+  GROUP BY m.id, ms.id;`
+  db.query(sql, cb)
+}
+
+exports.detailMovie = (id, cb) => {
+  const sql = `
+  SELECT m.id, m.title, m.picture ,string_agg(DISTINCT g.name, ', ') as genres,
+    string_agg(DISTINCT c.name, ', ') as casts,
+    m.synopsis, m.director, m.duration, m."releaseDate"
+    FROM "movie" m
+    JOIN "movieGenre" mg ON mg."movieId" = m.id
+    JOIN "genre" g ON g.id = mg."genreId"
+    JOIN "movieCast" mc ON mc."movieId" = m.id
+    JOIN "casts" c ON c.id = mc."castId"
+    WHERE m.id = $1
+    GROUP BY m.id`;
+  const values = [id]
+  db.query(sql, values, cb);
+};
