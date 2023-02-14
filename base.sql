@@ -122,21 +122,10 @@ CREATE TABLE "paymentMethod" (
     "updatedAt"     TIMESTAMPTZ
 );
 
-INSERT INTO "user"
-("picture", "firstName", "lastName", "phoneNumber", "email", "password")
-VALUES
-('profil.png', 'Deni', 'Ansyah', '0895711520107', 'deni@mail.com', 'deni123'),
-('fcProfil.png', 'Frenk', 'Clint', '0821xxxxxxxx', 'frenk@mail.com', 'fc123');
-
-INSERT INTO "transaction"
-("bokingDate", "movieId", "cinemaId", "movieScheduleId", "fullName", "email", "phoneNumber", "statusId")
-VALUES
-('2017-07-07 02:00:00', 1, 1, 1, 'Deni Ansyah', 'deni@gmail.com', '0895711520107', 1);
-
 INSERT INTO "subscribe"
 ("email")
 VALUES
-('deni@mail.com');
+('test@mail.com');
 
 INSERT INTO "status"
 ("name")
@@ -147,11 +136,6 @@ INSERT INTO "reversedSeat"
 ("seatNum", "transactionId")
 VALUES
 ('C4', 1);
-
-INSERT INTO "paymentMethod"
-("picture", "name")
-VALUES
-('ovo.png', 'ovo');
 
 INSERT INTO "movieScheduleTime"
 ("time", "movieScheduleId")
@@ -173,26 +157,11 @@ INSERT INTO "movieCast"
 VALUES
 (1, 1);
 
-INSERT INTO "movie"
-("picture", "title", "releaseDate", "director", "duration", "synopsis")
-VALUES
-('film1.png', 'Spider-Man', '2017-06-28 00:00:00', 'Jon Watss', '02:13:00', 'Thrilled by his experience with the Avengers, Peter returns home, where he lives with his Aunt May, under the watchful eye of his new mentor Tony Stark, Peter tries to fall back into his normal daily routine - distracted by thoughts of proving himself to be more than just your friendly neighborhood Spider-Man - but when the Vulture emerges as a new villain, everything that Peter holds most important will be threatened.');
-
 INSERT INTO "genre"
 ("name")
 VALUES
 ('Action'),
 ('Sci-Fi');
-
-INSERT INTO "forgot"
-("userId", "email")
-VALUES
-(2, 'fenk@mail.com');
-
-INSERT INTO "cinema"
-("picture", "name", "address", "city")
-VALUES
-('hiflix.png', 'hiflix', 'Colonel street No. 2, Ease Purwokerto', 'Purwokerto');
 
 INSERT INTO "casts"
 ("name")
