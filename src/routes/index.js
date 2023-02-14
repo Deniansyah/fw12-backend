@@ -1,5 +1,5 @@
 const routes = require("express").Router();
-const authMiddleware = require("../middleware/auth.middlware");
+const authMiddleware = require("../middlewares/auth.middlware");
 
 routes.use("/casts", require("./casts.route"));
 routes.use("/cinemas", require("./cinema.route"));
@@ -17,7 +17,7 @@ routes.use("/subscribes", require("./subscribe.route"));
 routes.use("/transactions", require("./transaction.route"));
 routes.use("/users", require("./users.route"));
 
-routes.use("/auth", require("./auth.router"))
+routes.use("/auth", require("./auth.router"));
 routes.use("/profile", require("./profile.router"));
 
 module.exports = routes;
