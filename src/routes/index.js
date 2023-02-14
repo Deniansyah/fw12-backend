@@ -18,5 +18,6 @@ routes.use("/transactions", require("./transaction.route"));
 routes.use("/users", require("./users.route"));
 
 routes.use("/auth", require("./auth.router"))
+routes.use("/profile", require("./profile.router"));
 
 module.exports = routes;
