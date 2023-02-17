@@ -109,7 +109,7 @@ exports.resetPassword = (req, res) => {
   }else {
     return res.status(400).json({
       success: false,
-      message: 'password and confirm password not match'
+      message: 'Password and confirm password not match'
     })
   }
 }
