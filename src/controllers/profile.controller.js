@@ -35,7 +35,7 @@ exports.uploadPicture = (req, res) => {
   if (req.file) {
     req.body.picture = req.file.path;
     selectUser(req.userData.id, (err, data) => {
-      if (data.rows[0].picture !== null) {
+      if (data.rows[0].picture) {
         const fileName = data.rows[0].picture.split("/").pop()?.split(".")[0];
         cloudinary.uploader.destroy(`gotickz/${fileName}`);
       }
