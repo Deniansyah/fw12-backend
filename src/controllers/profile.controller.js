@@ -9,7 +9,6 @@ exports.readProfile = (req, res) => {
         message: "Profile by token not found",
       });
     }
-    console.log(data.rows[0])
     return res.status(200).json({
       success: true,
       message: "Get profile user by token",
@@ -36,7 +35,7 @@ exports.uploadPicture = (req, res) => {
   if (req.file) {
     req.body.picture = req.file.path;
     selectUser(req.userData.id, (err, data) => {
-      if (data.rows[0].results.picture === null) {
+      if (data.rows[0].picture === null) {
         changeUser(req.userData.id, req.body, (err, result) => {
           if (err) {
             console.log(err);
