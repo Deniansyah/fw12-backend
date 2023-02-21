@@ -38,18 +38,48 @@ const storage = new CloudinaryStorage({
   },
 });
 
-const uploadImage = multer({
-  storage: storage,
-}).single("picture");
+const fileFilter = (req, file, cb) => {
+  if (
+    file.mimetype === "image/jpeg" ||
+    file.mimetype === "image/png" ||
+    file.mimetype === "image/gif"
+  ) {
+    cb(null, true)
+  } else {
+    cb(new Error("Invalid file type"), false)
+  }
+}
 
-module.exports = (req, res, next) => {
-  uploadImage(req, res, (error) => {
-    if (error) {
-      return res.status(400).json({
+const upload = multer({
+  storage,
+  limits: {
+    fileSize: 2 * 1024 * 1024
+  },
+  fileFilter,
+});
+
+const uploadErrorHandler = (err, req, res, next) => {
+  if (err instanceof multer.MulterError) {
+    if (err.code === "LIMIT_FILE_SIZE") {
+      res.status(400).json({
         success: false,
-        message: error.message,
-      });
+        message: "File size exceeded 2MB limit"
+      })
+    } else {
+      res.status(400).json({
+        success: false,
+        message: err.message
+      })
     }
-    next();
-  });
-};
+  } else {
+    res.status(500).json({
+      success: false,
+      message: err.message
+    })
+  }
+}
+
+module.exports = {
+  upload,
+  uploadErrorHandler
+}
