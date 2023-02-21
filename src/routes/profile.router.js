@@ -7,11 +7,9 @@ const {
 const authMiddleware = require("../middlewares/auth.middlware");
 const multer = require("multer")
 
-const upload = multer({
-  dest: "upload/"
-})
+const upload = require("../middlewares/upload.middleware")
 
-profile.patch("/upload", authMiddleware, upload.single("picture"), uploadPicture )
+profile.patch("/upload", authMiddleware, upload, uploadPicture )
 
 profile.get("/", authMiddleware, readProfile);
 profile.patch("/", authMiddleware, updateProfile);
