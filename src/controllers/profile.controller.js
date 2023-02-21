@@ -47,7 +47,7 @@ exports.uploadPicture = (req, res) => {
           });
         });
       } else {
-        const fileName = data?.rows[0].picture?.split("/").pop()?.split(".")[0];
+        const fileName = data.rows[0].picture.split("/").pop()?.split(".")[0];
         cloudinary.uploader.destroy(`gotickz/${fileName}`);
         changeUser(req.userData.id, req.body, (err, result) => {
           if (err) {
