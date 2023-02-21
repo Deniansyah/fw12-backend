@@ -33,14 +33,26 @@ exports.updateProfile = (req, res) => {
 
 exports.uploadPicture = (req, res) => {
   if (req.file) {
-    return res.status(200).json({
-      success: true,
-      message: `Upload picture success!`,
+    req.body.picture = req.file.path;
+    changeUser(req.userData.id, req.body, (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+
+      return res.status(200).json({
+        success: true,
+        message: `User updated`,
+        results: result.rows[0],
+      });
     });
+    // return res.status(200).json({
+    //   success: true,
+    //   message: `Upload picture success!`,
+    // });
   } else {
     return res.status(401).json({
       success: false,
       message: `Upload picture failed!`,
     });
   }
-}
+};
