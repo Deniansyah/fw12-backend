@@ -9,7 +9,7 @@ exports.readProfile = (req, res) => {
         message: "Profile by token not found",
       });
     }
-    console.log(data.rows[0].results)
+    console.log(data.rows[0])
     return res.status(200).json({
       success: true,
       message: "Get profile user by token",
