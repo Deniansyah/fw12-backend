@@ -36,7 +36,7 @@ exports.uploadPicture = (req, res) => {
   if (req.file) {
     req.body.picture = req.file.path;
     selectUser(req.userData.id, (err, data) => {
-      if (data.row[0].results.picture === null) {
+      if (data.rows[0].results.picture === null) {
         changeUser(req.userData.id, req.body, (err, result) => {
           if (err) {
             console.log(err);
