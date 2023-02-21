@@ -30,3 +30,17 @@ exports.updateProfile = (req, res) => {
     });
   });
 };
+
+exports.uploadPicture = (req, res) => {
+  if (req.file) {
+    return res.status(200).json({
+      success: true,
+      message: `Upload picture success!`,
+    });
+  } else {
+    return res.status(401).json({
+      success: false,
+      message: `Upload picture failed!`,
+    });
+  }
+}
