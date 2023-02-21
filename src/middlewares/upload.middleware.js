@@ -81,5 +81,6 @@ const uploadErrorHandler = (err, req, res, next) => {
 
 module.exports = {
   upload,
-  uploadErrorHandler
+  uploadErrorHandler,
+  cloudinary
 }
