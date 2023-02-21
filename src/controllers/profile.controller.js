@@ -35,31 +35,20 @@ exports.uploadPicture = (req, res) => {
   if (req.file) {
     req.body.picture = req.file.path;
     selectUser(req.userData.id, (err, data) => {
-      if (data.rows[0].picture === null) {
-        changeUser(req.userData.id, req.body, (err, result) => {
-          if (err) {
-            console.log(err);
-          }
-
-          return res.status(200).json({
-            success: true,
-            message: `Upload picture success!`,
-          });
-        });
-      } else {
+      if (data.rows[0].picture !== null) {
         const fileName = data.rows[0].picture.split("/").pop()?.split(".")[0];
         cloudinary.uploader.destroy(`gotickz/${fileName}`);
-        changeUser(req.userData.id, req.body, (err, result) => {
-          if (err) {
-            console.log(err);
-          }
-
-          return res.status(200).json({
-            success: true,
-            message: `Upload picture success!`,
-          });
-        });
       }
+    });
+    changeUser(req.userData.id, req.body, (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+
+      return res.status(200).json({
+        success: true,
+        message: `Upload picture success!`,
+      });
     });
   } else {
     return res.status(401).json({
